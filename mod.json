@@ -6,60 +6,93 @@
 		"mac": "2.2081",
 		"ios": "2.2081"
 	},
-	"id": "local.death-buffer",
-	"name": "Death Buffer",
-	"version": "v1.0.0",
+	"id": "local.phantom-click",
+	"name": "Phantom Click",
+	"version": "v3.0.0",
 	"developer": "Local",
-	"description": "Tracks your deaths on every level and buffers early clicks only at the spots you keep dying.",
+	"description": "Learns the clicks you die to and catches early clicks there - GD only gets them on the right tick. Death ranges, live per-range ticks from the console, and trajectory overlays.",
 	"settings": {
+		"buffer-title": {
+			"type": "title",
+			"name": "Buffer"
+		},
 		"enabled": {
 			"type": "bool",
-			"name": "Buffer early clicks",
-			"description": "Hold clicks that land a few ticks early at spots you've died at, and fire them on the right tick. Death tracking keeps running when this is off.",
+			"name": "Catch early clicks",
+			"description": "Catch clicks that land a few ticks early at clicks you've died to, and give them to GD on the right tick. Learning, death logging and trails keep running when this is off.",
 			"default": true
 		},
 		"buffer-ticks": {
 			"type": "int",
-			"name": "Ticks early allowed",
-			"description": "How many ticks early a click can be and still fire on the right tick. 2 turns a 1-tick window into a 3-tick window.",
+			"name": "Default ticks per range",
+			"description": "How many ticks early a click may be in any death range that doesn't have its own setting. Set ranges one by one with the console tool (python phantom.py). A caught click is never held longer than this.",
 			"default": 2,
-			"min": 1,
-			"max": 6
+			"min": 0,
+			"max": 10
 		},
-		"min-deaths": {
-			"type": "int",
-			"name": "Deaths before buffering",
-			"description": "How many times you must die at a spot before the buffer turns on there.",
-			"default": 1,
-			"min": 1,
-			"max": 100
-		},
-		"merge-blocks": {
+		"range-width": {
 			"type": "float",
-			"name": "Same-spot distance (blocks)",
-			"description": "Deaths this close together count as the same spot.",
+			"name": "Death range width (%)",
+			"description": "Each death counts toward a range this wide, centred on a whole percent. 1 means a death at 51% belongs to 50.5-51.5%.",
 			"default": 1.0,
 			"min": 0.25,
 			"max": 5.0
 		},
-		"lookback-blocks": {
+		"min-misses": {
+			"type": "int",
+			"name": "Misses before buffering",
+			"description": "How many times a click must kill you before the buffer turns on for it.",
+			"default": 1,
+			"min": 1,
+			"max": 100
+		},
+		"judge-seconds": {
 			"type": "float",
-			"name": "Click lookback (blocks)",
-			"description": "How far before a death spot to look for the click that got you past it.",
-			"default": 4.0,
-			"min": 0.5,
-			"max": 20.0
+			"name": "Judge time (seconds)",
+			"description": "A click counts as a miss if you die within this time after it, and as a pass if you're still alive after it. Raise it if deaths come long after the click (long jumps, fast speeds).",
+			"default": 0.75,
+			"min": 0.2,
+			"max": 3.0
+		},
+		"merge-blocks": {
+			"type": "float",
+			"name": "Same-click distance (blocks)",
+			"description": "Clicks this close together count as the same click.",
+			"default": 1.0,
+			"min": 0.25,
+			"max": 5.0
 		},
 		"count-practice": {
 			"type": "bool",
 			"name": "Count practice deaths",
-			"description": "Log practice-mode deaths too. Practice is a good place to teach the buffer a spot.",
+			"description": "Log practice-mode deaths and misses too. Practice passes always count, so practice is the quickest way to teach a click.",
 			"default": true
+		},
+		"overlay-title": {
+			"type": "title",
+			"name": "Overlay"
+		},
+		"overlay": {
+			"type": "string",
+			"name": "Show overlay",
+			"description": "Draw your death ranges, deaths, learned right ticks and trails inside the level. Green = buffer ON, amber = learning, red = deaths only, blue = delay range, grey = off.",
+			"default": "Practice only",
+			"one-of": ["Off", "Practice only", "Always"]
+		},
+		"overlay-trails": {
+			"type": "bool",
+			"name": "Show trails",
+			"description": "Draw your best run (green, with your clicks) and your last attempt (white) on the overlay.",
+			"default": true
+		},
+		"console-title": {
+			"type": "title",
+			"name": "Console"
 		},
 		"log-events": {
 			"type": "bool",
 			"name": "Console log",
-			"description": "Print deaths, learned spots, buffered clicks and a summary when you leave a level to the Geode console.",
+			"description": "Print deaths, ranges, learning, caught clicks and level summaries to the Geode console.",
 			"default": true
 		}
 	}

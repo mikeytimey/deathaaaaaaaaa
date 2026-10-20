@@ -1,11 +1,13 @@
-# Death Buffer
+# ◆ Phantom Click
 
-Tracks every death on every level (exact percent and position) and buffers early clicks **only at the spots you keep dying**.
+Learns the clicks you die to. Click a few ticks early there, and the mod **catches the click**: GD only gets it on the **right tick**.
 
-1. Die at a spot. It's logged.
-2. Get past that spot once (practice mode works). The click that got you past it becomes the "right tick".
-3. From then on, a click up to 2 ticks early at that spot is held and fires on the right tick. A 1-tick window becomes 3 ticks.
+- **Death ranges:** every death counts toward a 1% range, so 51% means 50.5-51.5%.
+- **Per-range ticks:** set each range from the console tool (`python phantom.py`). Changes apply on your next attempt.
+- **Smart, delay or off:** smart holds early clicks until the learned right tick. Delay holds every click in a range a fixed number of ticks. Off disables it.
+- **Overlay:** range bands, deaths, learned right ticks and your best and last runs, drawn inside the level.
+- **Level map:** pan and zoom your trajectories in the browser with `python phantom.py map <level>`.
 
-Every other click is left alone. Data is saved to `deaths.json` in the mod's save folder. Turn on Geode's console to watch deaths and buffered clicks as they happen.
+Every death is logged with its exact percent. On-time clicks, late clicks, and clicks away from your death spots are never touched.
 
 Runs made with this mod are input-assisted and don't count for leaderboards or list submissions.
