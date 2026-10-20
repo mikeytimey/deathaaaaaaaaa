@@ -1,0 +1,66 @@
+{
+	"geode": "5.11.2",
+	"gd": {
+		"win": "2.2081",
+		"android": "2.2081",
+		"mac": "2.2081",
+		"ios": "2.2081"
+	},
+	"id": "local.death-buffer",
+	"name": "Death Buffer",
+	"version": "v1.0.0",
+	"developer": "Local",
+	"description": "Tracks your deaths on every level and buffers early clicks only at the spots you keep dying.",
+	"settings": {
+		"enabled": {
+			"type": "bool",
+			"name": "Buffer early clicks",
+			"description": "Hold clicks that land a few ticks early at spots you've died at, and fire them on the right tick. Death tracking keeps running when this is off.",
+			"default": true
+		},
+		"buffer-ticks": {
+			"type": "int",
+			"name": "Ticks early allowed",
+			"description": "How many ticks early a click can be and still fire on the right tick. 2 turns a 1-tick window into a 3-tick window.",
+			"default": 2,
+			"min": 1,
+			"max": 6
+		},
+		"min-deaths": {
+			"type": "int",
+			"name": "Deaths before buffering",
+			"description": "How many times you must die at a spot before the buffer turns on there.",
+			"default": 1,
+			"min": 1,
+			"max": 100
+		},
+		"merge-blocks": {
+			"type": "float",
+			"name": "Same-spot distance (blocks)",
+			"description": "Deaths this close together count as the same spot.",
+			"default": 1.0,
+			"min": 0.25,
+			"max": 5.0
+		},
+		"lookback-blocks": {
+			"type": "float",
+			"name": "Click lookback (blocks)",
+			"description": "How far before a death spot to look for the click that got you past it.",
+			"default": 4.0,
+			"min": 0.5,
+			"max": 20.0
+		},
+		"count-practice": {
+			"type": "bool",
+			"name": "Count practice deaths",
+			"description": "Log practice-mode deaths too. Practice is a good place to teach the buffer a spot.",
+			"default": true
+		},
+		"log-events": {
+			"type": "bool",
+			"name": "Console log",
+			"description": "Print deaths, learned spots, buffered clicks and a summary when you leave a level to the Geode console.",
+			"default": true
+		}
+	}
+}
